@@ -42,7 +42,7 @@ class ProfilesController < ApplicationController
     @profile_attrs[:nsfw] ||= false
 
     if params[:photo_id]
-      @profile_attrs[:photo] = Photo.where(:author_id => current_user.person.id, :id => params[:photo_id]).first
+      @profile_attrs[:photo] = Photo.where(:author_id => current_user.person_id, :id => params[:photo_id]).first
     end
 
     if current_user.update_profile(@profile_attrs)
@@ -73,7 +73,7 @@ class ProfilesController < ApplicationController
     end
 
     if remotipart_submitted?
-      profile = current_user.person.profile
+      profile = current_user.profile
 
       profile.wallpaper.store! params[:photo][:user_file]
       if profile.save
